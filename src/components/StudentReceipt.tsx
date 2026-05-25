@@ -1,13 +1,14 @@
 import React from "react";
 import { Santri } from "../types";
-import { Printer, X, CheckCircle, ShieldCheck, Download } from "lucide-react";
+import { Printer, X, CheckCircle, ShieldCheck, Download, LayoutDashboard } from "lucide-react";
 
 interface StudentReceiptProps {
   student: Santri;
   onClose: () => void;
+  onBackToDashboard?: () => void;
 }
 
-export default function StudentReceipt({ student, onClose }: StudentReceiptProps) {
+export default function StudentReceipt({ student, onClose, onBackToDashboard }: StudentReceiptProps) {
   
   const handlePrint = () => {
     window.print();
@@ -43,6 +44,13 @@ export default function StudentReceipt({ student, onClose }: StudentReceiptProps
           </div>
 
           <div className="flex items-center gap-2">
+            <button
+              onClick={onBackToDashboard || onClose}
+              className="px-4 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-xs transition flex items-center gap-1.5 cursor-pointer"
+            >
+              <LayoutDashboard className="w-3.5 h-3.5 text-stone-500" />
+              <span>Kembali ke Dashboard</span>
+            </button>
             <button
               onClick={handlePrint}
               className="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs shadow-md shadow-emerald-700/20 transition flex items-center gap-1.5 cursor-pointer"

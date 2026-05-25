@@ -204,6 +204,10 @@ export default function App() {
         <StudentReceipt
           student={printStudent}
           onClose={() => setPrintStudent(null)}
+          onBackToDashboard={() => {
+            setPrintStudent(null);
+            setActiveTab("dashboard");
+          }}
         />
       )}
 
