@@ -7,11 +7,13 @@ import RegistrationForm from "./components/RegistrationForm";
 import AppsScriptGuideView from "./components/AppsScriptGuideView";
 import StudentReceipt from "./components/StudentReceipt";
 import StudentDetailsModal from "./components/StudentDetailsModal";
+import PasswordLockScreen from "./components/PasswordLockScreen";
 import { Santri } from "./types";
 import { initialMockSantri } from "./mockData";
 import { Sparkles, CheckCircle2, X } from "lucide-react";
 
 export default function App() {
+  const [isUnlocked, setIsUnlocked] = useState<boolean>(() => sessionStorage.getItem("psb_is_unlocked") === "true");
   const [activeTab, setActiveTab] = useState<string>("dashboard");
   const [students, setStudents] = useState<Santri[]>([]);
   
@@ -104,6 +106,10 @@ export default function App() {
       setShowSuccessToast(false);
     }, 5000);
   };
+
+  if (!isUnlocked) {
+    return <PasswordLockScreen onUnlock={() => setIsUnlocked(true)} />;
+  }
 
   return (
     <div className="flex h-screen bg-stone-100 overflow-clip select-none font-sans text-stone-800">

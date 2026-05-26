@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Menu, X, Settings, RefreshCw, Sparkles, CheckCircle2, ChevronRight, LayoutDashboard, UserPlus, Search, Code } from "lucide-react";
+import { Menu, X, Settings, RefreshCw, Sparkles, CheckCircle2, ChevronRight, LayoutDashboard, UserPlus, Search, Code, KeyRound } from "lucide-react";
+import ChangePasswordModal from "./ChangePasswordModal";
 
 interface HeaderProps {
   activeTab: string;
@@ -24,6 +25,7 @@ export default function Header({
 }: HeaderProps) {
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
   const [showConfigModal, setShowConfigModal] = useState(false);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [inputUrl, setInputUrl] = useState(gasUrl);
 
   const formatTabName = (tab: string) => {
@@ -100,6 +102,16 @@ export default function Header({
           </button>
         )}
 
+        {/* Tombol Ubah Password Akses */}
+        <button
+          onClick={() => setShowPasswordModal(true)}
+          className="px-3.5 py-1.8 rounded-xl text-xs font-bold border bg-white text-stone-700 border-stone-300 hover:bg-stone-50 flex items-center gap-1.5 transition-all shadow-sm cursor-pointer"
+          title="Ubah kata sandi akses aplikasi"
+        >
+          <KeyRound className="w-3.5 h-3.5 text-amber-600" />
+          <span className="hidden sm:inline">Ubah Sandi</span>
+        </button>
+
         {/* Tombol Konfigurasi Database */}
         <button
           onClick={() => setShowConfigModal(true)}
@@ -152,6 +164,14 @@ export default function Header({
           >
             <Code className="w-5 h-5 text-emerald-400" />
             <span className="text-sm font-semibold">Panduan Integrasi</span>
+          </button>
+
+          <button
+            onClick={() => { setShowPasswordModal(true); setIsOpenMobileMenu(false); }}
+            className="w-full text-left p-3 rounded-lg flex items-center gap-3 hover:bg-stone-850 text-amber-400 border-t border-stone-800/60 pt-4 mt-2"
+          >
+            <KeyRound className="w-5 h-5 text-amber-500" />
+            <span className="text-sm font-semibold">Ubah Kata Sandi</span>
           </button>
         </div>
       )}
@@ -233,6 +253,10 @@ export default function Header({
             </form>
           </div>
         </div>
+      )}
+      {/* MODAL UBAH PASSWORD AKSES */}
+      {showPasswordModal && (
+        <ChangePasswordModal onClose={() => setShowPasswordModal(false)} />
       )}
     </header>
   );
